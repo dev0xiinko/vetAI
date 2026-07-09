@@ -1,0 +1,9 @@
+-- Seed data for local development.
+--
+-- Profiles are auto-created by the on_auth_user_created trigger when an auth
+-- user signs up, defaulting to role 'staff'. To create an admin locally, sign
+-- up a user, then promote them here by id, e.g.:
+--
+--   update public.profiles set role = 'admin' where id = '<auth-user-uuid>';
+--
+-- Keep real PII out of committed seed data.

@@ -1,0 +1,44 @@
+{
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Bash(npm run dev)",
+      "Bash(npm run build)",
+      "Bash(npm run start)",
+      "Bash(npm run lint)",
+      "Bash(npm run typecheck)",
+      "Bash(npm run test:*)",
+      "Bash(npm run db:types)",
+      "Bash(npm install)",
+      "Bash(npm ci)",
+      "Bash(npx tsc*)",
+      "Bash(npx prettier*)",
+      "Bash(npx eslint*)",
+      "Bash(supabase migration new:*)",
+      "Bash(supabase gen types:*)",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git add:*)",
+      "Bash(git log:*)",
+      "Read(./**)",
+      "Edit(./src/**)",
+      "Edit(./supabase/**)",
+      "Edit(./.claude/**)"
+    ],
+    "ask": [
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(supabase db push:*)",
+      "Bash(supabase db reset:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Read(./.env)",
+      "Read(./.env.local)",
+      "Read(./**/*.pem)",
+      "Edit(./.env)",
+      "Edit(./.env.local)"
+    ]
+  },
+  "enableAllProjectMcpServers": false
+}
