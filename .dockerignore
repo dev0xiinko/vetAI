@@ -1,0 +1,23 @@
+node_modules
+.next
+.git
+.github
+.claude
+.vscode
+npm-debug.log*
+Dockerfile
+.dockerignore
+docker-compose.yml
+docker-compose.*.yml
+
+# secrets — never bake into an image
+.env
+.env.local
+.env.*.local
+
+# not needed to build or run the app
+supabase
+*.md
+!README.md
+tsconfig.tsbuildinfo
+coverage

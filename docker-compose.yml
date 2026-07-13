@@ -1,0 +1,25 @@
+services:
+  web:
+    build:
+      context: .
+      args:
+        # Public (anon) values — safe to inline into the client bundle.
+        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+    image: vetiassist:local
+    ports:
+      # Override the host port if 3000 is already taken: WEB_PORT=3001 docker compose up
+      - "${WEB_PORT:-3000}:3000"
+    environment:
+      # Server-only secrets. Never prefix these with NEXT_PUBLIC_.
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-openai/gpt-4o-mini}
+      OPENROUTER_SITE_URL: ${OPENROUTER_SITE_URL:-}
+      OPENROUTER_APP_NAME: ${OPENROUTER_APP_NAME:-VetiAssist}
+      # Re-declared for server-side reads; must match the build args above.
+      NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+    env_file:
+      - .env.local
+    restart: unless-stopped
