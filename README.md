@@ -10,6 +10,7 @@ Veterinary clinic management system with two AI-assisted features — **symptom-
 - [Environment variables](#environment-variables)
 - [Database setup](#database-setup)
 - [Running the app](#running-the-app)
+- [Running with Docker](#running-with-docker)
 - [Available scripts](#available-scripts)
 - [Project guide](#project-guide)
   - [Directory structure](#directory-structure)
@@ -130,6 +131,37 @@ Every table must ship with RLS enabled and at least one policy — see the RBAC 
 npm run dev      # local dev server, http://localhost:3000
 npm run build    # production build
 npm run start    # run the production build
+```
+
+## Running with Docker
+
+The app ships as a multi-stage image built on Next.js `output: "standalone"` (runs as a
+non-root user, ~310 MB).
+
+```bash
+# Build and run. --env-file is required: Compose interpolates ${VARS} from it.
+docker compose --env-file .env.local up --build
+
+# Port 3000 already taken? Pick another host port:
+WEB_PORT=3001 docker compose --env-file .env.local up --build
+```
+
+The app is then on <http://localhost:3000> (or `$WEB_PORT`).
+
+**Build-time vs run-time env.** `NEXT_PUBLIC_*` values are inlined into the client bundle
+during `next build`, so they are passed as **build args** — changing them requires a rebuild.
+Server secrets (`SUPABASE_SERVICE_ROLE_KEY`, `OPENROUTER_API_KEY`) are injected at **run
+time** only and are never baked into the image.
+
+Building without Compose means passing the public values yourself:
+
+```bash
+docker build \
+  --build-arg NEXT_PUBLIC_SUPABASE_URL="https://xxxx.supabase.co" \
+  --build-arg NEXT_PUBLIC_SUPABASE_ANON_KEY="sb_publishable_..." \
+  -t vetiassist:local .
+
+docker run --rm -p 3000:3000 --env-file .env.local vetiassist:local
 ```
 
 ## Available scripts

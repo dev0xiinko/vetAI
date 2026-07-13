@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Emits .next/standalone with a minimal server + only the deps it traces.
+  output: "standalone",
 };
 
 export default nextConfig;
